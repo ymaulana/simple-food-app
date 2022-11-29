@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-const Counter = ({ defaultValue, onRemoveItem }) => {
+const Counter = ({ defaultValue, onRemoveItem, onValueChange }) => {
   const [value, setValue] = useState(0);
 
   const buttonStyle =
@@ -17,13 +17,16 @@ const Counter = ({ defaultValue, onRemoveItem }) => {
         onRemoveItem();
       }
       setValue(value - 1);
+      onValueChange(value - 1);
     } else {
       setValue(value);
+      onValueChange(value);
     }
   };
 
   const onPlusItem = () => {
     setValue(value + 1);
+    onValueChange(value + 1);
   };
 
   return (
