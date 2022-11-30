@@ -1,6 +1,9 @@
+import { useRecoilValue } from "recoil";
+import { sumItemState } from "../../recoil/items";
 import currency from "../../utils/currency";
 
-const Footer = ({ totalPrice }) => {
+const Footer = () => {
+  const { totalPrice } = useRecoilValue(sumItemState);
   return (
     <div className="footer py-4 px-3">
       <button className="btn-submit flex justify-between py-2 px-6 bg-[#4caf50] w-full border border-solid border-[#4caf50] rounded-3xl">

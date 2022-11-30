@@ -1,10 +1,10 @@
 import { Item } from "../Item";
 
-const ListItem = ({ items, onItemChange }) => {
+const ListItem = ({ items }) => {
   return (
     <div className="listItem flex flex-wrap justify-between gap-4">
       {items.map((item) => (
-        <Item item={item} onItemChange={onItemChange} />
+        <Item item={item} />
       ))}
     </div>
   );

@@ -1,52 +1,28 @@
 import { useEffect } from "react";
-import { useState } from "react";
+import { useRecoilState } from "recoil";
 import "./App.css";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Body, Container } from "./components/Layout";
 import { ListItem } from "./components/ListItem";
 import items from "./dummy/items.json";
+import { listItemsState } from "./recoil/items";
 
 function App() {
-  const [listItems, setListItems] = useState([]);
-  const [totalItem, setTotalItem] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const sumTotal = (allItems) => {
-    const total = allItems.reduce((prev, curr) => prev + curr.value, 0);
-    const totalPrice = allItems.reduce(
-      (prev, curr) => prev + curr.value * curr.price,
-      0
-    );
-    setTotalItem(total);
-    setTotalPrice(totalPrice);
-  };
-
-  const onItemChange = (itemChange) => {
-    const newArrayItems = listItems.map((item) => {
-      if (item.id === itemChange.id) {
-        return itemChange;
-      } else {
-        return item;
-      }
-    });
-    setListItems(newArrayItems);
-    sumTotal(newArrayItems);
-  };
+  const [listItems, setListItems] = useRecoilState(listItemsState);
 
   useEffect(() => {
     setListItems(items);
-    sumTotal(items);
-  }, []);
+  }, [setListItems]);
 
   return (
     <div className="App">
       <Container>
-        <Header totalItem={totalItem} />
+        <Header />
         <Body>
-          <ListItem items={listItems} onItemChange={onItemChange} />
+          <ListItem items={listItems} />
         </Body>
-        <Footer totalPrice={totalPrice} />
+        <Footer />
       </Container>
     </div>
   );

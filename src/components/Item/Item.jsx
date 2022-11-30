@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { listItemsState } from "../../recoil/items";
 import currency from "../../utils/currency";
 import Counter from "./Counter";
 
 const Item = (props) => {
-  const { item, onItemChange } = props;
+  const [listItems, setListItems] = useRecoilState(listItemsState);
+  const { item } = props;
   const { name, img, price, value } = item;
   const [itemValue, setItemValue] = useState(0);
 
@@ -21,6 +24,17 @@ const Item = (props) => {
     const newItem = { ...item };
     newItem.value = valueChange;
     onItemChange(newItem);
+  };
+
+  const onItemChange = (itemChange) => {
+    const newArrayItems = listItems.map((item) => {
+      if (item.id === itemChange.id) {
+        return itemChange;
+      } else {
+        return item;
+      }
+    });
+    setListItems(newArrayItems);
   };
 
   useEffect(() => {
